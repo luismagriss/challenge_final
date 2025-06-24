@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.2.2 (Python 3.13.4 on win32)" generated="2025-06-24T20:11:08.997118" rpa="false" schemaversion="5">
+<suite id="s1" name="Auth" source="C:\challenge_final\tests\api\auth.robot">
+<kw name="Start Session" owner="base" type="SETUP">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-06-24T20:11:09.642593" level="INFO">${headers} = {'accept': 'application/json', 'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9...</msg>
+<var>${headers}</var>
+<arg>accept=application/json</arg>
+<arg>Authorization=${JWT_TOKEN}</arg>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-06-24T20:11:09.642301" elapsed="0.000326"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-06-24T20:11:09.642879" level="INFO">Creating Session using : alias=CinemaApp, url=http://localhost:3002/api/v1, headers={'accept': 'application/json', 'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30', 'Content-Type': 'application/json'},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>CinemaApp</arg>
+<arg>${BASE_URL}</arg>
+<arg>${headers}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-06-24T20:11:09.642726" elapsed="0.000303"/>
+</kw>
+<status status="PASS" start="2025-06-24T20:11:09.641729" elapsed="0.001357"/>
+</kw>
+<test id="s1-t1" name="Cenário: Registrar um novo usuário com sucesso" line="9">
+<kw name="POST Endpoint /register" owner="auth">
+<kw name="Email" owner="FakerLibrary">
+<msg time="2025-06-24T20:11:09.643999" level="INFO">${RANDOM_EMAIL} = browntyler@example.net</msg>
+<var>${RANDOM_EMAIL}</var>
+<status status="PASS" start="2025-06-24T20:11:09.643639" elapsed="0.000380"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-06-24T20:11:09.644280" level="INFO">${body} = {'name': 'Novo Usuário Teste', 'email': 'browntyler@example.net', 'password': 'SenhaSegura123!'}</msg>
+<var>${body}</var>
+<arg>name=${VALID_NAME}</arg>
+<arg>email=${RANDOM_EMAIL}</arg>
+<arg>password=${VALID_PASSWORD}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-06-24T20:11:09.644095" elapsed="0.000203"/>
+</kw>
+<kw name="POST" owner="RequestsLibrary">
+<msg time="2025-06-24T20:11:09.838049" level="INFO">POST Request : url=http://localhost:3002/api/v1/auth/register 
+ path_url=/api/v1/auth/register 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '86', 'Content-Type': 'application/x-www-form-urlencoded'} 
+ body=name=Novo+Usu%C3%A1rio+Teste&amp;email=browntyler%40example.net&amp;password=SenhaSegura123%21 
+ </msg>
+<msg time="2025-06-24T20:11:09.838128" level="INFO">POST Response : url=http://localhost:3002/api/v1/auth/register 
+ status=201, reason=Created 
+ headers={'Vary': 'Origin', 'x-powered-by': 'Express', 'access-control-allow-origin': '*', 'content-type': 'application/json; charset=utf-8', 'content-length': '316', 'etag': 'W/"13c-ygR3FAHXgA1QpxSD1WSJNg3/Ne0"', 'date': 'Tue, 24 Jun 2025 23:11:09 GMT', 'connection': 'close'} 
+ body={"success":true,"data":{"_id":"685b308d56cd86688c85575b","name":"Novo Usuário Teste","email":"browntyler@example.net","role":"user","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWIzMDhkNTZjZDg2Njg4Yzg1NTc1YiIsImlhdCI6MTc1MDgwNjY2OSwiZXhwIjoxNzUwODkzMDY5fQ.w_RMCmLX1qicrZD9rh2wNjSci-tL4St6ZaoPehAQ4AI"}} 
+ </msg>
+<msg time="2025-06-24T20:11:09.838249" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${BASE_URL}/auth/register</arg>
+<arg>${body}</arg>
+<doc>Sends a POST request.</doc>
+<status status="PASS" start="2025-06-24T20:11:09.644363" elapsed="0.193907"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-06-24T20:11:09.838329" elapsed="0.000056"/>
+</return>
+<msg time="2025-06-24T20:11:09.838496" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<status status="PASS" start="2025-06-24T20:11:09.643473" elapsed="0.195040"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-06-24T20:11:09.839191" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>201</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-06-24T20:11:09.838777" elapsed="0.000463"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-06-24T20:11:09.839799" level="INFO">{'success': True, 'data': {'_id': '685b308d56cd86688c85575b', 'name': 'Novo Usuário Teste', 'email': 'browntyler@example.net', 'role': 'user', 'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWIzMDhkNTZjZDg2Njg4Yzg1NTc1YiIsImlhdCI6MTc1MDgwNjY2OSwiZXhwIjoxNzUwODkzMDY5fQ.w_RMCmLX1qicrZD9rh2wNjSci-tL4St6ZaoPehAQ4AI'}}</msg>
+<arg>${response.json()}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-06-24T20:11:09.839424" elapsed="0.000417"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${response.json()}[data][token]</arg>
+<arg>${PARTIAL_TOKEN}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2025-06-24T20:11:09.839988" elapsed="0.000312"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${response.json()}[data][role]</arg>
+<arg>user</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2025-06-24T20:11:09.840428" elapsed="0.000293"/>
+</kw>
+<status status="PASS" start="2025-06-24T20:11:09.643132" elapsed="0.197715"/>
+</test>
+<doc>Testes de autenticação</doc>
+<status status="PASS" start="2025-06-24T20:11:08.998391" elapsed="0.842952"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Auth" id="s1" pass="1" fail="0" skip="0">Auth</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
