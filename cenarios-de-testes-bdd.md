@@ -1,7 +1,7 @@
 # Cenários de Testes BDD
 
 ## Funcionalidade: Autenticação de Usuário
-```
+```gherkin
 Cenário: Registrar um novo usuário com sucesso (UI e API)
   Dado que sou um "Visitante"
   Quando eu acesso a página de registro no Front-end
@@ -9,13 +9,14 @@ Cenário: Registrar um novo usuário com sucesso (UI e API)
   E preencho o campo "Email" com um email único gerado dinamicamente
   E preencho o campo "Senha" com "SenhaSegura123!"
   E clico no botão "Registrar"
-  Então a requisição **POST** para `/api/v1/auth/register` deve ser enviada com os dados fornecidos
-  E a **API** deve retornar o **status 200 OK**
-  E a resposta da **API** deve conter um **token JWT**
-  E a resposta da **API** deve conter os dados do usuário registrado com `role: "user"`
+  Então a requisição POST para `/api/v1/auth/register` deve ser enviada com os dados fornecidos
+  E a API deve retornar o **status 200 OK**
+  E a resposta da API deve conter um token JWT
+  E a resposta da API deve conter os dados do usuário registrado com role: "user"
   E o usuário deve ser redirecionado para a página inicial do Front-end
   E uma mensagem de sucesso "Registro bem-sucedido!" deve ser exibida na UI
-
+```
+```gherkin
 Cenário: Tentar registrar com email duplicado (UI e API)
   Dado que sou um "Visitante"
   E que o email "usuario_existente@example.com" já está registrado no sistema
@@ -30,7 +31,8 @@ Cenário: Tentar registrar com email duplicado (UI e API)
   E a resposta da **API** deve conter uma mensagem de erro indicando que o email já existe
   E uma mensagem de erro "Email já cadastrado" deve ser exibida visualmente na UI
   E eu devo permanecer na página de registro
-
+```
+```gherkin
 Cenário: Logar como usuário e acessar perfil (UI e API)
   Dado que sou um "Usuário" com email "user@example.com" e senha "password123"
   Quando eu acesso a página de login no Front-end
@@ -46,7 +48,8 @@ Cenário: Logar como usuário e acessar perfil (UI e API)
   Então uma requisição **GET** para `/api/v1/auth/me` deve ser enviada com o token JWT no header `Authorization`
   E a **API** deve retornar o **status 200 OK**
   E a página de perfil deve exibir o nome e email do usuário: "user@example.com"
-
+```
+```gherkin
 Cenário: Fazer logout e ser redirecionado (UI e API)
   Dado que sou um "Usuário" logado
   Quando eu clico no link "Logout" no cabeçalho do Front-end
@@ -54,16 +57,16 @@ Cenário: Fazer logout e ser redirecionado (UI e API)
   E eu devo ser redirecionado para a página de login ou inicial (pública)
   Quando eu tento acessar uma rota protegida como `/profile`
   Então devo ser automaticamente redirecionado para a página de login
-
+```
+```gherkin
 Cenário: Tentar acessar rota de administrador como usuário comum (UI e API)
   Dado que sou um "Usuário" logado
   Quando eu tento acessar a rota `/admin/movies` diretamente pela URL
   Então o Front-end deve redirecionar para uma página de erro ou login
   E uma requisição para uma rota de administrador (`/api/v1/movies`) com token de usuário deve retornar **status 403 Forbidden** na **API**
-
 ```
 ## Funcionalidade: Navegação e Exibição de Filmes
-```
+```gherkin
 Cenário: Visualizar a lista de filmes em cartaz na página inicial (UI e API)
   Dado que sou um "Visitante"
   Quando eu acesso a página inicial do Front-end (`/`)
@@ -71,7 +74,8 @@ Cenário: Visualizar a lista de filmes em cartaz na página inicial (UI e API)
   E a **API** deve retornar o **status 200 OK** com uma lista de filmes
   E os pôsteres dos filmes e informações básicas (título, classificação, gênero) devem ser exibidos em grid na UI
   E o layout da página deve ser responsivo para diferentes tamanhos de tela
-
+```
+```gherkin
 Cenário: Filtrar filmes por título e validar resultados (UI e API)
   Dado que sou um "Visitante"
   E que existem filmes com os títulos "Matrix", "Matrix Reloaded" e "V de Vingança"
@@ -82,7 +86,8 @@ Cenário: Filtrar filmes por título e validar resultados (UI e API)
   E a **API** deve retornar o **status 200 OK**
   E a resposta da **API** deve conter apenas os filmes que contêm "Matrix" no título
   E apenas os filmes "Matrix" e "Matrix Reloaded" devem ser exibidos na lista
-
+```
+```gherkin
 Cenário: Exibir detalhes de um filme específico, incluindo sessões (UI e API)
   Dado que sou um "Visitante"
   E que existe um filme "O Poderoso Chefão" com o ID "filme_dch3x"
@@ -91,17 +96,18 @@ Cenário: Exibir detalhes de um filme específico, incluindo sessões (UI e API)
   E uma requisição **GET** para `/api/v1/movies/filme_dch3x` deve ser enviada
   E a **API** deve retornar o **status 200 OK** com os detalhes completos do filme
   E a página de detalhes deve exibir a sinopse, elenco, diretor e sessões disponíveis com seus horários, cinemas e preços
-
+```
+```gherkin
 Cenário: Navegar para seleção de assentos a partir dos detalhes do filme (UI)
   Dado que sou um "Usuário" logado
   E estou na página de detalhes do filme "O Poderoso Chefão"
   E existem sessões disponíveis para este filme
   Quando eu clico em um horário de sessão disponível
   Então eu sou redirecionado para a página de seleção de assentos (`/sessions/:id/seats`) para aquela sessão específica
+```
 
-```
 ## Funcionalidade: Gerenciamento de Filmes (Administrador)
-```
+```gherkin
 Cenário: Criar um novo filme com sucesso (UI e API)
   Dado que sou um "Administrador" logado
   Quando eu acesso o painel administrativo (`/admin`)
@@ -114,7 +120,8 @@ Cenário: Criar um novo filme com sucesso (UI e API)
   E a resposta da **API** deve conter os detalhes do filme recém-criado
   E o novo filme deve aparecer na lista de filmes no painel de administração da UI
   E uma mensagem de sucesso deve ser exibida na UI
-
+```
+```gherkin
 Cenário: Editar um filme existente (UI e API)
   Dado que sou um "Administrador" logado
   E existe um filme "Filme para Edição" com o ID "filme_edicao_xyz" no sistema
@@ -128,7 +135,8 @@ Cenário: Editar um filme existente (UI e API)
   E a resposta da **API** deve conter os detalhes do filme atualizados
   E a lista de filmes na UI deve refletir a nova duração para "Filme para Edição"
   E uma mensagem de sucesso deve ser exibida na UI
-
+```
+```gherkin
 Cenário: Excluir um filme (UI e API)
   Dado que sou um "Administrador" logado
   E existe um filme "Filme para Exclusão" com o ID "filme_del_abc" no sistema
@@ -140,7 +148,8 @@ Cenário: Excluir um filme (UI e API)
   E a **API** deve retornar o **status 204 No Content**
   E o filme não deve mais ser exibido na lista de filmes no painel de administração
   E uma mensagem de sucesso "Filme excluído" deve ser exibida na UI
-
+```
+```gherkin
 Cenário: Tentar criar filme com dados inválidos (UI e API)
   Dado que sou um "Administrador" logado
   Quando eu acesso a seção de "Gerenciamento de Filmes" no painel administrativo
@@ -151,10 +160,10 @@ Cenário: Tentar criar filme com dados inválidos (UI e API)
   E a **API** deve retornar o **status 400 Bad Request**
   E a resposta da **API** deve conter `success: false` e detalhes de erro de validação
   E uma mensagem de erro "Título é obrigatório" deve ser exibida na UI abaixo do campo Título
+```
 
-```
 ## Funcionalidade: Gerenciamento de Salas (Administrador)
-```
+```gherkin
 Cenário: Criar uma nova sala de cinema (UI e API)
   Dado que sou um "Administrador" logado
   Quando eu acesso o painel administrativo (`/admin`)
@@ -166,7 +175,8 @@ Cenário: Criar uma nova sala de cinema (UI e API)
   E a **API** deve retornar o **status 201 Created**
   E a resposta da **API** deve conter os detalhes da sala criada
   E a "Sala Platinum" deve aparecer na lista de salas no painel de administração da UI
-
+```
+```gherkin
 Cenário: Tentar criar sala com capacidade inválida (UI e API)
   Dado que sou um "Administrador" logado
   Quando eu acesso a seção de "Gerenciamento de Salas" no painel administrativo
@@ -180,7 +190,7 @@ Cenário: Tentar criar sala com capacidade inválida (UI e API)
   E uma mensagem de erro "Capacidade deve ser maior que 0" deve ser exibida na UI
 ```
 ## Funcionalidade: Gerenciamento de Sessões (Administrador)
-```
+```gherkin
 Cenário: Agendar uma nova sessão com sucesso (UI e API)
   Dado que sou um "Administrador" logado
   E que existe um filme "Vingadores" e uma sala "Sala VIP" no sistema
@@ -194,7 +204,8 @@ Cenário: Agendar uma nova sessão com sucesso (UI e API)
   E a **API** deve retornar o **status 201 Created**
   E a resposta da **API** deve conter os detalhes da sessão agendada
   E a nova sessão deve aparecer na lista de sessões no painel de administração da UI
-
+```
+```gherkin
 Cenário: Tentar agendar sessão com conflito de horário na mesma sala (UI e API)
   Dado que sou um "Administrador" logado
   E existe uma sessão agendada na "Sala 1" para "2025-07-01 18:00" a "20:00"
@@ -206,10 +217,9 @@ Cenário: Tentar agendar sessão com conflito de horário na mesma sala (UI e AP
   E a **API** deve retornar o **status 400 Bad Request**
   E a resposta da **API** deve conter uma mensagem de erro indicando conflito de horário
   E uma mensagem de erro "Conflito de horário na sala" deve ser exibida na UI
-
 ```
 ## Funcionalidade: Reserva de Assentos e Checkout
-```
+```gherkin
 Cenário: Realizar uma reserva de assentos com sucesso (UI e API)
   Dado que sou um "Usuário" logado
   E que existe uma sessão para o filme "Avatar" com assentos disponíveis
@@ -226,7 +236,8 @@ Cenário: Realizar uma reserva de assentos com sucesso (UI e API)
   E a resposta da **API** deve conter os detalhes da reserva confirmada e um `confirmationCode`
   E os assentos "A1" e "A2" devem ter seus status alterados para "reserved" na **API** da sessão
   E uma tela de confirmação de reserva com o código deve ser exibida na UI
-
+```
+```gherkin
 Cenário: Tentar reservar assentos indisponíveis (UI e API)
   Dado que sou um "Usuário" logado
   E que existe uma sessão e os assentos "B1" e "B2" já estão reservados por outro usuário
@@ -241,7 +252,7 @@ Cenário: Tentar reservar assentos indisponíveis (UI e API)
   E uma mensagem de erro "Assentos selecionados não estão mais disponíveis" deve ser exibida na UI
 ```
 ## Funcionalidade: Gerenciamento de Reservas (Usuário e Administrador)
-```
+```gherkin
 Cenário: Visualizar minhas reservas como usuário (UI e API)
   Dado que sou um "Usuário" logado
   E possuo reservas ativas no sistema
@@ -249,7 +260,8 @@ Cenário: Visualizar minhas reservas como usuário (UI e API)
   Então uma requisição **GET** para `/api/v1/reservations/me` deve ser enviada com o token JWT
   E a **API** deve retornar o **status 200 OK** com a lista de minhas reservas
   E a lista de minhas reservas deve ser exibida na UI com os detalhes (filme, data, hora, cinema, assentos, status, pôster)
-
+```
+```gherkin
 Cenário: Administrador visualiza todas as reservas (UI e API)
   Dado que sou um "Administrador" logado
   Quando eu acesso o painel administrativo (`/admin`)
@@ -259,14 +271,15 @@ Cenário: Administrador visualiza todas as reservas (UI e API)
   E a lista completa de reservas (incluindo reservas de outros usuários) deve ser exibida na UI
 ```
 ## Funcionalidade: Gerenciamento de Usuários (Administrador - API)
-```
+```gherkin
 Cenário: Administrador busca um usuário por ID (API)
   Dado que sou um "Administrador" logado
   E que existe um usuário com o ID "user_test_api_id"
   Quando eu envio uma requisição **GET** para `/api/v1/users/user_test_api_id`
   Então a **API** deve retornar o **status 200 OK**
   E a resposta da **API** deve conter os detalhes do usuário com ID "user_test_api_id"
-
+```
+```gherkin
 Cenário: Administrador tenta deletar um usuário inexistente (API)
   Dado que sou um "Administrador" logado
   Quando eu envio uma requisição **DELETE** para `/api/v1/users/usuario_inexistente_id`
