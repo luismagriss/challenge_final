@@ -27,7 +27,7 @@ Cenário: Tentar registrar com email duplicado (UI e API)
   E clico no botão "Registrar"
   Então a requisição **POST** para `/api/v1/auth/register` deve ser enviada
   E a **API** deve retornar o **status 400 Bad Request**
-  E a resposta da **API** deve conter `success: false` e `error.code: "VALIDATION_ERROR"` ou similar
+  E a resposta da **API** deve conter `success: false` e `message: User already exists`.
   E a resposta da **API** deve conter uma mensagem de erro indicando que o email já existe
   E uma mensagem de erro "Email já cadastrado" deve ser exibida visualmente na UI
   E eu devo permanecer na página de registro
