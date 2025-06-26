@@ -11,8 +11,9 @@ ${VALID_PASSWORD}    SenhaSegura123!
 
 *** Keywords ***
 Start Session
+    ${BEARER_TOKEN}    Set Variable    Bearer ${JWT_TOKEN}
     ${headers}    Create Dictionary
     ...           accept=application/json
-    ...           Authorization=${JWT_TOKEN}
+    ...           Authorization=${BEARER_TOKEN}
     ...           Content-Type=application/json
     Create Session    CinemaApp    ${BASE_URL}    ${headers}
