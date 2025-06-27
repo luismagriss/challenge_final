@@ -1,173 +1,196 @@
-# Plano de Testes para o Challenge PB AWS & AI for QE: Automação de Testes de Cinema
+# Plano de Testes: Cinema App - Challenge PB AWS & AI for QE
 
-Este Plano de Testes detalha as atividades, estratégias e recursos necessários para o desenvolvimento do projeto de automação de testes do desafio final do Programa de Bolsa na Compass UOL, trilha "AWS & AI for QE". O foco principal será a validação funcional das funcionalidades de um sistema de reserva de ingressos e gerenciamento de cinema (back-end e front-end).
+**Versão:** 1.1  
+**Data:** 26 de junho de 2025  
+**Autor:** Luis Magris de Sousa, Estagiário em Engenharia de Qualidade.
 
------
+---
 
-## 1\. Introdução
+## 1. Introdução e Resumo
 
-O objetivo deste plano é guiar a criação de um projeto de automação de testes para uma aplicação de cinema, que consiste em um back-end e um front-end. O projeto visa garantir a qualidade do sistema, identificar defeitos, validar os requisitos funcionais e aplicar as melhores práticas de engenharia de qualidade. Será utilizada a ferramenta Robot Framework para a automação dos testes.
+Este documento estabelece o Plano de Testes para a aplicação **Cinema App**, um sistema composto por um Front-end em React e um Back-end RESTful em Node.js. O objetivo deste plano é guiar de forma estruturada todas as atividades de teste funcional e de integração, garantindo a qualidade e a conformidade da aplicação com os requisitos definidos no escopo do desafio **Challenge PB AWS & AI for QE**.
 
------
+O projeto de testes visa validar as funcionalidades da aplicação de ponta a ponta, abrangendo desde a interação do usuário na interface até as regras de negócio e a persistência de dados na API. Através de uma estratégia de automação com **Robot Framework**, buscaremos identificar defeitos, garantir a estabilidade e fornecer uma avaliação clara da qualidade do produto final.
 
-## 2\. Escopo dos Testes
+---
 
-O escopo dos testes abrangerá as principais funcionalidades da aplicação de cinema, tanto no **back-end (API)** quanto no **front-end (interface de usuário)**.
+## 2. Escopo dos Testes
 
-### 2.1. Funcionalidades a Serem Testadas:
+### 2.1 Funcionalidades em Escopo
 
-  * **Gerenciamento de Filmes:**
-      * Listagem de filmes (API e UI)
-      * Criação de novos filmes (API e UI)
-      * Atualização de informações de filmes (API e UI)
-      * Exclusão de filmes (API e UI)
-  * **Gerenciamento de Salas:**
-      * Listagem de salas (API e UI)
-      * Criação de novas salas (API e UI)
-      * Atualização de informações de salas (API e UI)
-      * Exclusão de salas (API e UI)
-  * **Gerenciamento de Sessões:**
-      * Listagem de sessões (API e UI)
-      * Criação de novas sessões (API e UI)
-      * Atualização de informações de sessões (API e UI)
-      * Exclusão de sessões (API e UI)
-  * **Funcionalidades de Usuário (Front-end):**
-      * Visualização de filmes e detalhes.
-      * Navegação entre as diferentes seções da aplicação.
-      * Interação com os elementos da interface de usuário (botões, campos de texto, etc.).
+As seguintes funcionalidades serão testadas de forma exaustiva, cobrindo tanto a camada de API (Back-end) quanto a de UI (Front-end):
 
-### 2.2. Funcionalidades Fora do Escopo:
+#### **Módulo de Autenticação**
+- Registro de novos usuários  
+- Login com credenciais válidas e inválidas  
+- Logout e invalidação de sessão  
+- Gestão de perfil do usuário (visualização e atualização)  
+- Controle de acesso baseado em papéis (Visitante, Usuário, Administrador)
 
-  * Testes de performance/carga.
-  * Testes de segurança.
-  * Testes de usabilidade extensivos (apenas validação funcional).
-  * Testes de compatibilidade em múltiplos navegadores (foco em um navegador principal).
+#### **Módulo de Catálogo de Filmes (Visão Pública)**
+- Listagem e visualização de filmes em cartaz  
+- Visualização de detalhes de um filme específico (sinopse, diretor, duração etc.)  
+- Visualização de sessões disponíveis para um filme
 
------
+#### **Módulo de Reservas (Usuário Logado)**
+- Seleção de filme e sessão  
+- Visualização e seleção de assentos em um mapa interativo  
+- Validação de assentos (disponíveis, ocupados, selecionados)  
+- Simulação do processo de checkout e pagamento  
+- Confirmação da reserva  
+- Visualização do histórico de reservas
 
-## 3\. Objetivos dos Testes
+#### **Painel Administrativo (Administrador)**
+- CRUD de Filmes  
+- CRUD de Salas  
+- CRUD de Sessões  
+- Gerenciamento de Reservas  
+- Gerenciamento de Usuários
 
-  * **Garantir a Correta Implementação das Funcionalidades:** Assegurar que o sistema atenda aos requisitos funcionais especificados.
-  * **Identificar e Reportar Defeitos:** Encontrar bugs, anomalias e comportamentos inesperados na aplicação.
-  * **Assegurar a Qualidade do Software:** Validar que o sistema opere de forma estável e confiável.
-  * **Fornecer Feedback Contínuo:** Oferecer informações sobre a qualidade do produto ao longo do ciclo de desenvolvimento.
+### 2.2 Funcionalidades Fora de Escopo
 
------
+- **Testes de Performance e Carga**
+- **Testes de Segurança Aprofundados**
+- **Testes de Usabilidade**
+- **Testes de Compatibilidade entre navegadores**
 
-## 4\. Estratégias de Teste
+---
 
-A estratégia de testes será baseada em uma abordagem híbrida, combinando testes de API (back-end) e testes de UI (front-end), com foco em automação.
+## 3. Estratégia de Teste
 
-  * **Testes de API (Back-end):**
-      * Serão desenvolvidos testes automatizados para validar os endpoints da API (GET, POST, PUT, DELETE) para as entidades de Usuários, Filmes, Salas e Sessões.
-      * Validação de códigos de status HTTP, estruturas de resposta (JSON) e dados retornados.
-      * Cenários de sucesso e falha para cada endpoint.
-  * **Testes de UI (Front-end):**
-      * Serão desenvolvidos testes automatizados para simular interações do usuário com a interface gráfica, navegando pelas diferentes telas e validando o comportamento esperado.
-      * Validação da exibição correta de dados, mensagens de erro e elementos da UI.
-      * Cobertura dos fluxos de criação, edição, visualização e exclusão através da interface do usuário.
-  * **Testes de Regressão:**
-      * Todos os testes automatizados serão executados periodicamente para garantir que novas alterações não introduzam defeitos em funcionalidades existentes.
-  * **Design de Casos de Teste:**
-      * Serão utilizados **mapas mentais** para auxiliar na identificação de cenários e casos de teste.
-      * **Priorização de cenários de alto risco e de maior impacto.**
-      * **Cenários complexos e de fluxo** serão abordados para garantir a cobertura de ponta a ponta.
+### 3.1 Testes de API (Back-end)
 
------
+- **Ferramenta:** `RequestsLibrary` (Robot Framework)  
+- **Validações:**  
+  - Status Codes  
+  - Contrato da API (estrutura JSON)  
+  - Regras de Negócio  
+  - Integridade dos Dados
 
-## 5\. Critérios de Entrada e Saída
+### 3.2 Testes de UI (Front-end)
 
-### 5.1. Critérios de Entrada (Start Testing):
+- **Ferramenta:** `Browser Library` (Robot Framework)  
+- **Validações:**  
+  - Renderização de componentes  
+  - Navegação e fluxos  
+  - Interatividade  
+  - Feedback visual (mensagens)
 
-  * Ambiente de teste configurado e acessível (back-end e front-end).
-  * Repositório Git inicializado e configurado.
-  * Ferramentas e dependências de automação instaladas (Robot Framework, Browser Library, Requests Library, etc.).
-  * Plano de Testes aprovado e revisado.
+### 3.3 Testes de Integração (End-to-End)
 
-### 5.2. Critérios de Saída (End Testing):
+- **Validação de fluxos completos entre UI e API**
 
-  * Todos os cenários de teste críticos executados e com status final.
-  * Cobertura de testes satisfatória (conforme métricas definidas).
-  * Bugs críticos reportados e rastreados.
-  * Relatório de testes gerado e documentado.
-  * Documentação do projeto atualizada no README e/ou Wiki do repositório.
+**Exemplo de Cenário**:  
+> UI: Admin cria filme → API: verificação no banco → UI: visitante visualiza filme
 
------
+### 3.4 Testes de Regressão
 
-## 6\. Ambiente de Teste
+- A suíte completa será reutilizada a cada nova entrega
 
-  * **Hardware:** Processador AMD Ryzen 7 5700G, 16GB RAM, com acesso à internet.
-  * **Sistema Operacional:** Windows 11 Pro.
-  * **Software:**
-      * Python 3.13.4 (com pip para gerenciamento de pacotes).
-      * Robot Framework.
-      * Browser Library.
-      * Requests Library.
-      * Web browser (Chrome recomendado para compatibilidade com Selenium WebDriver).
-      * Git para controle de versão.
-      * Visual Studio Code.
-  * **Dados de Teste:**
-      * Dados de teste serão criados e gerenciados de forma programática ou através de arquivos de dados (ex: CSV, JSON) para garantir a independência dos testes.
+### 3.5 Design de Casos de Teste
 
------
+- Técnicas: **Partição de Equivalência**, **Valor Limite**  
+- Linguagem: **Gherkin (Dado, Quando, Então)**
 
-## 7\. Papéis e Responsabilidades
+---
 
-  * **Engenheiro de Qualidade (QE)**
-      * Planejamento e design dos testes.
-      * Desenvolvimento e execução dos scripts de automação.
-      * Análise de resultados e criação de issues (bugs/melhorias).
-      * Manutenção da documentação do projeto.
-      * Gerenciamento do repositório Git.
+## 4. Ambiente, Ferramentas e Recursos
 
------
+| Categoria        | Ferramenta/Recurso                    |
+|------------------|---------------------------------------|
+| Hardware         | Computador com acesso à internet      |
+| Software         | Python 3.13.4, Node.js                  |
+| Framework        | Robot Framework                       |
+| Bibliotecas      | Browser Library, RequestsLibrary      |
+| Navegador        | Google Chrome (última versão)         |
+| IDE              | Visual Studio Code                    |
+| Controle de Versão | Git e GitHub                       |
+| CI/CD            | GitHub Actions                        |
+| Gerenciamento    | Jira                                  |
 
-## 8\. Cronograma (Estimativa)
+---
 
-  * **Semana 1:**
-      * Estudo e análise da aplicação (back-end e front-end).
-      * Criação de mapa mental e identificação de cenários.
-      * Definição da estrutura inicial do projeto de automação.
-      * Configuração do ambiente de desenvolvimento.
-      * Início da automação dos testes de API (endpoints básicos).
-      * Continuação da automação de testes de API (cenários mais complexos).
-      * Início da automação de testes de UI (fluxos principais).
-  * **Semana 2:**
+## 5. Papéis e Responsabilidades
 
-      * Refatoração e aplicação de padrões (Page Objects, Service Objects).
-      * Finalização da automação de testes de UI.
-      * Execução e análise dos testes.
-      * Criação e rastreamento de issues (bugs/melhorias).
-      * Documentação do projeto (README, Wiki).
-      * Preparação para a apresentação.
+| Papel                  | Responsabilidades                                                                 |
+|------------------------|------------------------------------------------------------------------------------|
+| Engenheiro de Qualidade | Planejar, desenvolver e executar os testes, analisar e reportar resultados         |
 
------
+---
 
-## 9\. Recursos Necessários
+## 6. Critérios de Entrada e Saída
 
-  * **Ferramentas de Automação:** Robot Framework, Browser Library, Requests Library.
-  * **Controle de Versão:** Git e GitHub.
-  * **Documentação:** Markdown para README/Wiki, ferramentas para mapas mentais (ex: XMind, MindMeister).
-  * **Comunicação:** Plataformas para colaboração de colegas.
+### 6.1 Critérios de Entrada
+- Front-end e Back-end implantados  
+- Documentação da API disponível  
+- Acesso ao repositório configurado  
+- Plano de Testes revisado e aprovado
 
------
+### 6.2 Critérios de Saída
+- 100% dos testes executados  
+- Nenhum defeito crítico aberto  
+- Todos os bugs registrados no Jira  
+- Relatório final e código no repositório
 
-## 10\. Gerenciamento de Defeitos
+---
 
-  * **Identificação:** Defeitos serão identificados durante a execução dos testes automatizados e manuais.
-  * **Registro:** Todos os defeitos serão registrados como **Issues** no repositório GitHub, com informações detalhadas (passos para reprodução, resultados esperados vs. obtidos, capturas de tela/logs quando aplicável).
-  * **Priorização:** As issues serão priorizadas com base no impacto e gravidade do defeito (ex: Crítico, Alto, Médio, Baixo).
-  * **Acompanhamento:** As issues serão acompanhadas até a resolução.
+## 7. Gerenciamento de Defeitos
 
------
+- **Ferramenta:** Jira  
+- **Registro de Defeitos inclui:**
+  - Título (Summary)
+  - Descrição detalhada
+  - Evidências (prints, logs)
+  - Prioridade
+  - Componente afetado
+  - Fluxo de trabalho: `TO DO → IN PROGRESS → IN REVIEW → DONE`
 
-## 11\. Métricas de Teste
+---
 
-  * **Número de Casos de Teste Automatizados:** Quantidade de cenários cobertos pela automação.
-  * **Porcentagem de Testes Passados/Falhos:** Indicação da estabilidade da aplicação.
-  * **Cobertura de Automação:** Medida da proporção de funcionalidades cobertas por testes automatizados.
-  * **Número de Issues Abertas/Fechadas:** Indicador da qualidade e progresso na correção de defeitos.
-  * **Tempo Médio de Execução por Teste/Suite:** Crucial para pipelines de CI e para identificar testes lentos.
-  * **Flakiness Rate (Taxa de Instabilidade):** Porcentagem de testes que falham e passam aleatoriamente, indicando a confiabilidade dos testes.
+## 8. Métricas de Avaliação
 
------
+| Métrica                   | Descrição                                         | Meta                      |
+|---------------------------|---------------------------------------------------|---------------------------|
+| Cobertura de Requisitos   | % de requisitos testados                         | > 90%                     |
+| Total de Casos de Teste   | Número de testes automatizados                   | Conforme planejamento     |
+| Sucesso nos Testes        | % de testes que passaram                         | > 95% na suíte de regressão |
+| Defeitos Abertos          | Número por prioridade                            | 0 críticos/bloqueadores   |
+| Densidade de Defeitos     | Bugs por funcionalidade                          | Monitoramento contínuo    |
+
+---
+
+## 9. Riscos e Planos de Mitigação
+
+| Risco                              | Probabilidade | Impacto | Mitigação                                                                 |
+|-----------------------------------|---------------|---------|----------------------------------------------------------------------------|
+| Tempo limitado (2 semanas)        | Alta          | Alta    | Priorizar cenários críticos e reutilizar código                           |
+| Instabilidade do ambiente         | Média         | Alta    | Retries nos scripts e contato direto com o instrutor                      |
+| Mudanças tardias nos requisitos   | Baixa         | Média   | Modularização da automação e documentação dos impactos                    |
+
+---
+
+## 10. Cronograma e Entregáveis
+
+### 10.1 Cronograma (2 Semanas)
+
+**Semana 1: Planejamento e Automação Core**
+- Dias 1-2: Estudo da aplicação, finalização do plano e setup
+- Dias 3-5: Automação de testes de API e base da UI
+
+**Meta da Semana:** Estrutura de testes funcional e API coberta
+
+**Semana 2: End-to-End e Encerramento**
+- Dias 6-8: Automação de fluxos completos e painel admin
+- Dias 9-10: Execução final, relatório, refatoração e entrega
+
+**Meta da Semana:** Projeto finalizado e pronto para avaliação
+
+### 10.2 Entregáveis
+
+- Código-fonte da automação no GitHub  
+- `README.md` com instruções de execução  
+- Relatórios `log.html` e `report.html`  
+- Quadro de defeitos no Jira  
+- Este **Plano de Testes**
+
+---
