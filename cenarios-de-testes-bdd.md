@@ -247,6 +247,57 @@ E o usuário não deve ser redirecionado para a página de checkout
 ```
 
 ---
+## Funcionalidade: Painel Administrativo - Gerenciamento de Salas, Sessões e Usuários (API)
+
+**Prioridade:** Alta
+
+Como um **Administrador**, eu quero gerenciar os recursos centrais do cinema via API  
+para garantir a operação do sistema.
+
+---
+
+### 🟢 Cenário de Integração (API) - **Prioridade Máxima**
+
+**Cenário:** Criar um fluxo completo de filme, sala e sessão via API  
+**Dado que** um "Administrador" obteve um token de autenticação válido  
+**Quando** ele cria um novo filme "A Origem" via API e obtém o `movie_id`  
+**E** ele cria uma nova sala "Sala VIP" via API e obtém o `theater_id`  
+**E** ele envia uma requisição POST para `/api/v1/sessions` usando o `movie_id` e `theater_id` recém-criados  
+**Então** a API deve retornar o status `201 Created`  
+**E** a resposta deve conter o objeto da nova sessão com as informações corretas do filme e da sala
+
+---
+
+### 🟢 Cenário de Caminho Feliz (API) - **Prioridade Alta**
+
+**Cenário:** Criar uma nova sala de cinema com sucesso via API  
+**Dado que** um "Administrador" obteve um token de autenticação válido via API  
+**Quando** ele envia uma requisição POST para o endpoint `/api/v1/theaters` com os dados da nova sala "Sala 5 - IMAX"  
+**Então** a API deve retornar o status `201 Created`  
+**E** a resposta da API deve conter o objeto da sala "Sala 5 - IMAX"
+
+---
+
+### 🟢 Cenário de Caminho Feliz (API) - **Prioridade Alta**
+
+**Cenário:** Criar uma nova sessão de filme com sucesso via API  
+**Dado que** um "Administrador" obteve um token de autenticação válido via API  
+**E** existem um filme com ID `filme_id_valido` e uma sala com ID `sala_id_valida`  
+**Quando** ele envia uma requisição POST para o endpoint `/api/v1/sessions` com os dados da sessão, associando o filme e a sala  
+**Então** a API deve retornar o status `201 Created`  
+**E** a resposta da API deve conter o objeto da nova sessão
+
+---
+
+### 🟢 Cenário de Caminho Feliz (API) - **Prioridade Alta**
+
+**Cenário:** Listar todos os usuários do sistema com sucesso via API  
+**Dado que** um "Administrador" obteve um token de autenticação válido via API  
+**Quando** ele envia uma requisição GET para o endpoint `/api/v1/users`  
+**Então** a API deve retornar o status `200 OK`  
+**E** a resposta da API deve conter uma lista de todos os usuários cadastrados
+
+---
 
 ## Funcionalidade: Módulo de Catálogo de Filmes (Visão Pública)
 
