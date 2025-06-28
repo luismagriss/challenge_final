@@ -2,17 +2,22 @@
 Documentation        Keywords de uso geral da automação
 
 Resource        env.resource
-Resource        data/dynamic_data.resource
-Resource        data/fixtures.resource
+Resource        ../data/dynamic_data.resource
+Resource        ../fixtures/sessions_fixtures.resource
+Resource        ../fixtures/movies_fixtures.resource
+Resource        ../fixtures/users_fixtures.resource
+Resource        ../fixtures/theaters_fixtures.resource
+Resource        ../fixtures/reservations_fixtures.resource
 Resource        services/auth.resource
 Resource        services/movies.resource
 Resource        services/sessions.resource
 Resource        services/reservations.resource
 Resource        services/theaters.resource
 Resource        services/users.resource
+Library         ../libraries/reservations_utils.py
 Library         RequestsLibrary
 Library         FakerLibrary
-Library         ../libraries/ReservationUtils.py
+
 
 *** Variables ***
 ${VALID_NAME}        Novo Usuário Teste
@@ -34,3 +39,9 @@ Start User Session
 Start Administrator Session
     POST Endpoint auth/login    ${admin_user}    ${user_password}
     Start Session
+
+Clear Test Data
+    [Arguments]    ${movie_id}    ${theather_id}    ${session_id}
+    DELETE Endpoint /movies      ${movie_id}
+    DELETE Endpoint /theaters    ${theather_id}
+    DELETE Endpoint /sessions    ${session_id}

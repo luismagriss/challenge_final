@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation        Dados gerados dinamicamente
 
-Resource             ../base.resource
+Resource             ../resources/base.resource
 Library              FakerLibrary
 Library              RequestsLibrary
 Library              Collections
