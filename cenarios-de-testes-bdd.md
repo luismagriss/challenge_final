@@ -268,7 +268,3 @@ Então a UI deve fazer uma requisição GET para o endpoint "/api/v1/movies"
 E a API deve retornar o status 200 OK com uma lista de filmes
 E uma lista de pôsteres de filmes deve ser exibida na tela
 ```
-
----
-
-Se quiser, posso exportar esse conteúdo como `.md`. Deseja isso?
