@@ -2,12 +2,6 @@
 Documentation        Keywords utilizada no endpoint de autenticação
 
 Resource        ../base.resource
-Resource        ../data/dynamic_data.resource
-Library         RequestsLibrary
-Library         FakerLibrary
-
-*** Variables ***
-
 
 *** Keywords ***
 POST Endpoint auth/register
@@ -37,11 +31,5 @@ POST Endpoint auth/login
 
 GET Endpoint auth/me
     ${response}    GET On Session    CinemaApp    /auth/me
-
-    RETURN    ${response}
-
-POST Endpoint /movies
-    ${body}    Generate random movie data
-    ${response}    POST On Session    CinemaApp    ${BASE_URL}/movies  json=${body}    expected_status=403
 
     RETURN    ${response}
