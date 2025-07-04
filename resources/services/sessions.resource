@@ -15,3 +15,9 @@ DELETE Endpoint /sessions
     ${response}    DELETE On Session    CinemaApp    /sessions/${session_id}    expected_status=${expected_status}
 
     RETURN    ${response}
+
+PUT Endpoint /sessions/id/reset-seats
+    [Arguments]    ${session_id}    ${expected_status}=${None}
+    ${response}    PUT On Session    CinemaApp    /sessions/${session_id}/reset-seats    expected_status=${expected_status}
+
+    RETURN    ${response}

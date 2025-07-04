@@ -2,21 +2,27 @@
 Documentation        Keywords de uso geral da automação
 
 Resource        env.resource
-Resource        ../data/dynamic_data.resource
-Resource        ../fixtures/sessions_fixtures.resource
-Resource        ../fixtures/movies_fixtures.resource
-Resource        ../fixtures/users_fixtures.resource
-Resource        ../fixtures/theaters_fixtures.resource
-Resource        ../fixtures/reservations_fixtures.resource
 Resource        services/auth.resource
+Resource        services/users.resource
 Resource        services/movies.resource
 Resource        services/sessions.resource
-Resource        services/reservations.resource
 Resource        services/theaters.resource
-Resource        services/users.resource
+Resource        services/reservations.resource
+Resource        pages/LoginPage.resource
+Resource        pages/RegisterPage.resource
+Resource        ../data/dynamic_data.resource
+Resource        ../fixtures/users_fixtures.resource
+Resource        ../fixtures/movies_fixtures.resource
+Resource        ../fixtures/sessions_fixtures.resource
+Resource        ../fixtures/theaters_fixtures.resource
+Resource        ../fixtures/reservations_fixtures.resource
+Library         ../libraries/database_utils.py
 Library         ../libraries/reservations_utils.py
+Library         ../libraries/custom_browser_utils.py
 Library         RequestsLibrary
 Library         FakerLibrary
+Library         Browser
+
 
 
 *** Variables ***
@@ -24,6 +30,10 @@ ${VALID_NAME}        Novo Usuário Teste
 ${VALID_PASSWORD}    SenhaSegura123!    
 
 *** Keywords ***
+Start Browser Session
+    New Browser    browser=chromium     headless=False
+    New Page       ${FRONT_URL}
+
 Start Session
     ${BEARER_TOKEN}    Set Variable    Bearer ${JWT_TOKEN}
     ${headers}    Create Dictionary

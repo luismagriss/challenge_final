@@ -3,13 +3,15 @@ Documentation        Testes de autenticação
 
 Resource             ../../resources/base.resource
 
+
 *** Test Cases ***
 Cenário: Registrar um novo usuário com sucesso   
-    ${RANDOM_EMAIL}        FakerLibrary.Email 
-    ${response}    POST Endpoint auth/register    ${RANDOM_EMAIL}
+    ${new_user}        Set Variable    user_test@email.com 
+    ${response}    POST Endpoint auth/register    ${new_user}
     Should Be Equal As Strings    ${response.status_code}    201
     Should Not Be Empty    ${response.json()}[data][token]
-    Should Be Equal    ${response.json()}[data][role]     user  
+    Should Be Equal    ${response.json()}[data][role]     user
+    Remove User    ${new_user}
 
 Cenario: Tentar registrar um usuário com um e-mail já cadastrado
     ${response}    POST Endpoint auth/register    admin@example.com    expected_status=400
@@ -34,6 +36,7 @@ Cenário: Tentar acessar rota de administrador como usuário comum
     ${response}           POST Endpoint auth/login    regularuser@mail.com    teste123
     Should Be Equal As Strings    ${response.status_code}    200
     Should Not Be Empty    ${response.json()}[data][token]
+    
     Start Session
     ${body}    Generate random movie data
     ${response_movies}    POST Endpoint /movies    ${body}    expected_status=403

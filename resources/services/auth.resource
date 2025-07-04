@@ -33,3 +33,14 @@ GET Endpoint auth/me
     ${response}    GET On Session    CinemaApp    /auth/me
 
     RETURN    ${response}
+
+Obter Token do localStorage
+    Wait Until Keyword Succeeds    5s    1s    Token Should Exist In LocalStorage
+    ${token}    Evaluate JavaScript    ${None}    (key) => window.localStorage.getItem(key)    argument=Bearer
+
+    RETURN    ${token}
+
+Token Should Exist In LocalStorage
+    [Documentation]    Helper keyword that fails if the token is not yet in localStorage.
+    ${token}=    Evaluate Javascript    ${None}    (key) => window.localStorage.getItem(key)    argument=Bearer
+    Should Not Be Empty    ${token}    Token not found in localStorage yet.
