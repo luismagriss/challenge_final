@@ -45,10 +45,10 @@ jobs:
         # O comando 'npm run dev' é um exemplo, ajuste para o comando da sua API.
         run: |
           echo "Starting backend server..."
-          cd backend && npm run dev &
+          cd back-end && npm run dev &
           
           echo "Starting frontend server..."
-          cd frontend && npm start &
+          cd front-end && npm start &
 
           # Aumenta o tempo de espera para dar tempo dos dois servidores subirem
           echo "Waiting for servers to start..."
