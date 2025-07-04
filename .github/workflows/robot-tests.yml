@@ -1,41 +1,53 @@
-# Nome do seu workflow, que aparecerá na aba "Actions" do GitHub
 name: Run Robot Framework Tests
 
-# Gatilho (trigger): quando o workflow deve rodar?
 on:
   push:
-    branches: [ main, develop ] # Roda sempre que houver um push na branch main ou develop
+    branches: [ main, develop ]
   pull_request:
-    branches: [ main ] # Roda também quando um Pull Request for aberto para a main
+    branches: [ main ]
 
-# Tarefas (jobs) a serem executadas
 jobs:
   test:
-    # O tipo de máquina virtual para rodar o job
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Baixa o seu código do repositório para a máquina virtual
       - name: Checkout repository
-        uses: actions/checkout@v4 # Atualizado para v4
+        uses: actions/checkout@v4
 
-      # 2. Configura o ambiente Python
       - name: Set up Python
-        uses: actions/setup-python@v5 # Atualizado para v5
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      
+      # Adicione este passo se sua API for Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Use a versão do Node.js do seu projeto
 
-      # 3. Instala as dependências do projeto
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          # Se sua API for Node.js, instale as dependências dela também
+          # Assumindo que o package.json está na raiz. Se estiver em uma pasta 'backend', use 'cd backend && npm install'
+          npm install
 
-      # 4. Roda os testes do Robot Framework
+      - name: Initialize RF-Browser
+        # ✅ PASSO NOVO: Instala os navegadores para o Robot Framework Browser
+        run: rfbrowser init
+
+      - name: Start API Server in Background
+        # ✅ PASSO NOVO: Inicia o servidor da API e o deixa rodando em background (&)
+        # O comando 'npm run dev' é um exemplo, ajuste para o comando da sua API.
+        run: |
+          npm run dev &
+          sleep 15 # Espera 15 segundos para dar tempo do servidor subir completamente
+
       - name: Run Robot Framework tests
+        # Este passo agora encontrará o servidor rodando em localhost
         run: robot -d results tests/
 
-      # 5. Faz o upload dos artefatos de teste usando v4
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
