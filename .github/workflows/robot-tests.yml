@@ -1,0 +1,44 @@
+# Nome do seu workflow, que aparecerá na aba "Actions" do GitHub
+name: Run Robot Framework Tests
+
+# Gatilho (trigger): quando o workflow deve rodar?
+on:
+  push:
+    branches: [ main, develop ] # Roda sempre que houver um push na branch main ou develop
+  pull_request:
+    branches: [ main ] # Roda também quando um Pull Request for aberto para a main
+
+# Tarefas (jobs) a serem executadas
+jobs:
+  test:
+    # O tipo de máquina virtual para rodar o job
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Baixa o seu código do repositório para a máquina virtual
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Configura o ambiente Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9' # Use a versão do Python compatível com seu projeto
+
+      # 3. Instala as dependências do projeto
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt # Certifique-se de ter um arquivo requirements.txt!
+
+      # 4. Roda os testes do Robot Framework
+      - name: Run Robot Framework tests
+        run: robot -d results tests/ # Altere 'tests/' para o caminho da sua suíte de testes
+
+      # 5. (Opcional, mas muito bom!) Faz o upload dos artefatos de teste (relatórios)
+      - name: Upload test results
+        if: always() # Roda este passo mesmo se os testes falharem
+        uses: actions/upload-artifact@v3
+        with:
+          name: robot-framework-results
+          path: results/ # O caminho para a pasta de resultados definida no passo anterior
