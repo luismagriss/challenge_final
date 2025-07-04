@@ -48,7 +48,7 @@ jobs:
           cd back-end && npm run dev &
           
           echo "Starting frontend server..."
-          cd front-end && npm start &
+          cd front-end && npm run dev &
 
           # Aumenta o tempo de espera para dar tempo dos dois servidores subirem
           echo "Waiting for servers to start..."
