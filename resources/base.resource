@@ -31,7 +31,7 @@ ${VALID_PASSWORD}    SenhaSegura123!
 
 *** Keywords ***
 Start Browser Session
-    New Browser    browser=chromium     headless=False
+    New Browser    browser=chromium     headless=True
     New Page       ${FRONT_URL}
 
 Start Session
