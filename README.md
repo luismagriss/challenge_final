@@ -110,7 +110,7 @@ A cobertura contempla os seguintes módulos da aplicação:
 - Login de usuários
 - Fluxo de reserva de ingressos
 
-> Para detalhes completos, consulte a [seção de cobertura de testes](docs/CoberturaDeTestes.md).
+> Para detalhes completos, consulte o [relatório de testes](relatorio-de-testes.md).
 
 ---
 
