@@ -14,6 +14,8 @@ O objetivo deste plano é guiar a criação de um projeto de automação de test
 
 O escopo dos testes abrangerá as principais funcionalidades da aplicação de cinema, tanto no **back-end (API)** quanto no **front-end (interface de usuário)**.
 
+[![Mapa Mental](Cinema WebApp.jpg)](https://github.com/luismagriss/challenge_final/blob/main/Cinema%20WebApp.jpg?raw=true)
+
 ### 2.1. Funcionalidades a Serem Testadas:
 
   * **Gerenciamento de Filmes:**
