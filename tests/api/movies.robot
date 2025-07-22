@@ -20,7 +20,7 @@ Cenário: Excluir um filme existente como Administrador
     Should Be Equal               ${get_movie_response.json()}[message]    Movie not found
 
 Cenário: Atualizar os detalhes de um filme existente via API
-    ${movie_id}    Set Variable    6865d642158f64ced71c67bc
+    ${movie_id}    Set Variable    6869362120b8882f6c232ecb
     ${random_body}    Generate random movie data
     
     ${body}    Create Dictionary

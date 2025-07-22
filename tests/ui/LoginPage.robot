@@ -8,7 +8,7 @@ Test Tags            login    authentication
 
 *** Test Cases ***
 Cenário: Realizar uma reserva de ponta a ponta com sucesso
-    ${session_id}       Set Variable    6865d643158f64ced71c6814
+    ${session_id}       Set Variable    686930f5e4a72e49cf6cb308
     ${user}             Create Dictionary
     ...                 email=${regular_user}
     ...                 password=${user_password}
@@ -46,7 +46,7 @@ Cenário: Login de Administrador com sucesso e validação de token
     ...                 password=${user_password}
     
     Go to login page
-    Submit signup form    ${user}
+    Submit Login form    ${user}
     Alert should be       Login realizado com sucesso!
     # Verifica se cabeçalho da página contém texto "Administração" para validar login como admin
     ${element}    Set Variable    xpath=//div[contains(@class, "header-container")]//a[text()="Administração"]

@@ -2,7 +2,7 @@ from pymongo import MongoClient
 from robot.api.deco import keyword
 import bcrypt
 
-client = MongoClient('mongodb+srv://luismagris:1234@cluster0.puv9mfb.mongodb.net/cinema?retryWrites=true&w=majority&appName=Cluster0')
+client = MongoClient('mongodb+srv://luismagris:teste123@cluster0.puv9mfb.mongodb.net/cinemaapp?retryWrites=true&w=majority&appName=Cluster0')
 
 db = client['cinema']
 
