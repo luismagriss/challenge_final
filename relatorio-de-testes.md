@@ -1,4 +1,4 @@
-# Relatório de Execução de Testes – Automação de Testes de Cinema
+# Relatório de Execução de Testes – Automação de Testes
 
 **Data de Emissão:** 04 de julho de 2025  
 **Ferramenta de Automação:** Robot Framework
